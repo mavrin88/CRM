@@ -888,7 +888,6 @@ class BaseController extends Controller
             $dates = Carbon::now();
         }
 
-
 //        $dates = Carbon::now();
 
 //        $date = Carbon::today()->addDays(-3)->toDateString();
