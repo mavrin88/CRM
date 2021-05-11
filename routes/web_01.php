@@ -18,5 +18,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('get_email', 'VueController@getEmail');
     Route::post('getone', 'VueController@getOne');
     Route::get('testing', 'PagesController@testing');
-    Route::get('promoter', 'PagesController@promoter');
+    Route::get('promouter', 'PagesController@promoter');
 });

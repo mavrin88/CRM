@@ -73,6 +73,6 @@ Route::group(['prefix' => '', 'as' => 'admin.', 'namespace' => 'Admin', 'middlew
     Route::get('testing', 'PagesController@testing');
 
 //    Route::resource('promoter', 'BaseController');
-    Route::get('promoter', 'PagesController@promoter');
+    Route::get('promouter', 'PagesController@promoter');
 
 });

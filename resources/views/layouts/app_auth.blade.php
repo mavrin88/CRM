@@ -16,10 +16,12 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.css' rel='stylesheet' />
 
     <!-- Theme CSS -->
-      
+
     <link rel="stylesheet" href="https://dashkit.goodthemes.co/assets/css/theme.min.css" id="stylesheetLight">
 
     <link rel="stylesheet" href="https://dashkit.goodthemes.co/assets/css/theme-dark.min.css" id="stylesheetDark">
+
+      <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
 
 
     <title>@yield('title')</title>

@@ -866,12 +866,20 @@ class BaseController extends Controller
         ];
     }
 
+
+    //-------------------- Добавляем данные о ребенке ---------------------------------------------
+
     public function addClientFromPromoter(Request $request){
 
-        return 'Promoter';
+        $base = Base::create($request->all());
+
+        loger(2, $base->id, null, null, 'Добавил ребенка в базу');
+
+        return 'ребенок добавлен и лог записан' . $base->name ;
     }
 
-    // Снимаем блокировку с карточки
+    //------------------- Снимаем блокировку с карточки -----------------------------------------
+
     public function removeBlock(Request $request){
 
         Base::where('id', $request->id)->update(['block' => 0, 'user_block_id' => 0]);

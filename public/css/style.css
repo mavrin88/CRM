@@ -1,0 +1,238 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.main-logo {
+  width: 500px;
+  margin: 30px auto;
+}
+
+.inputs {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: 100%;
+}
+
+.inputs input {
+  height: 95px;
+  text-align: center;
+  margin-bottom: 45px;
+    margin-left: 45px;
+  border: 2px solid #044510;
+  font-size: 28px;
+  letter-spacing: 4px;
+  border-radius: 5px;
+}
+
+.button {
+  height: 95px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+    background: #044510;
+    color: #f7f8f9;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: normal;
+}
+
+.login-button {
+  width: calc(100% - 30px);
+  margin: 20px 40px 20px;
+}
+
+ .btn:hover{
+
+     color: #f7f8f9;
+}
+
+.forgot-password-button {
+  border: none;
+  background: inherit;
+  color: #044510;
+  text-decoration: none;
+  letter-spacing: 2px;
+  font-size: 28px;
+    margin-left: 30%;
+}
+
+header {
+  margin: 45px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+
+header .menu-icon img {
+  width: 78px;
+}
+
+.menu {
+  position: absolute;
+  background: #fff;
+  height: 100%;
+  top: 0;
+  width: 100%;
+  left: 0;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 9;
+}
+
+.menu.open {
+  display: flex;
+}
+
+.menu a {
+  font-size: 48px;
+  margin-bottom: 45px;
+  color: #044510;
+}
+
+.menu .icons {
+  display: flex;
+  flex-direction: column;
+}
+
+.cross-icon{
+  position: absolute;
+  top: 45px;
+  right: 45px;
+  transform: rotate(45deg);
+  width: 78px;
+}
+
+.inputs div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputs div:not(.form-group) input:first-child {
+  width: 75%;
+}
+
+.inputs div:not(.form-group) input:last-child {
+  width: 20%;
+}
+
+.city-select {
+  border: 2px solid #044510;
+  margin-bottom: 45px;
+  height: 95px;
+  font-size: 28px;
+  letter-spacing: 4px;
+}
+
+.city-select option {
+  font-size: 12px;
+}
+
+
+
+.conversation-block button {
+  background: none;
+  height: 80px;
+  font-size: 44px;
+    color: #8a8b90;
+    border: none;
+    border-top: 1px solid #044510;
+    position: relative;
+}
+
+
+
+.message-block {
+  padding: 25px;
+  max-height: 21vh;
+  overflow: scroll;
+}
+
+.sender-block {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 45px;
+}
+
+.receiver-block {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 45px;
+  flex-direction: row-reverse;
+}
+
+.sender-block img {
+  width: 80px;
+  margin-right: 25px;
+}
+
+.receiver-block img {
+  width: 80px;
+  margin-left: 25px;
+}
+
+.sender-block p, .receiver-block p {
+  margin: 0;
+  border: 1px solid #044510;
+  font-size: 22px;
+  padding: 15px;
+}
+
+.send-button {
+  margin-bottom: 0;
+}
+
+.map-image {
+  width: 100%;
+}
+
+.shedule-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 45px;
+}
+
+.shedule-header img {
+  width: 60px;
+  margin-right: 25px;
+}
+
+.shedule-header p {
+  margin: 0;
+  font-size: 60px;
+  text-decoration: underline;
+  letter-spacing: 5px;
+}
+
+.shedule-block {
+  padding: 0 25px;
+}
+
+.shedule-block p {
+  font-size: 36px;
+  letter-spacing: 2px;
+}
+
+@media (min-width: 992px) {
+  html, body {
+    overflow: visible;
+    max-width: 540px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 576px) {
+  .modal-dialog-centered {
+      max-width: 90%;
+  }
+}
+

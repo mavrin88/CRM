@@ -39,7 +39,7 @@ const routes = [
     { path: '/kassa', component: Kassa },
     { path: '/kassa_setings', component: KassaSettings },
     { path: '/base', component: Base },
-    { path: '/promoter', component: Promoter },
+    { path: '/promouter', component: Promoter },
     { path: '/source', component: Source },
     { path: '/warehouse', component: Warehouse },
     { path: '/testing', component: Testing },

@@ -1,359 +1,479 @@
 <template>
     <div>
-        <div class="card">
-            <div class="card-body pb-0">
-                <form @submit.prevent="send">
-                <div class="form-group">
-                    <label class="required">Имя ребёнка</label>
-                    <input class="form__input" v-model="child_name">
+        <header>
+            <a><img src="/images/images_for_promouter/avatar.png"></a>
+            <a><img src="/images/images_for_promouter/red.png"></a>
+            <a><img src="/images/images_for_promouter/calendar.png"></a>
+            <a><img src="/images/images_for_promouter/map-button.png"></a>
+            <div class="menu-icon"><img src='/images/images_for_promouter/menu.svg'></div>
+        </header>
+        <main class="container-sm">
+            <div class="menu">
+                <img class="cross-icon" src="/images/images_for_promouter/cross.svg">
+                <div class="icons">
+                    <a>menu item</a>
+                    <a>menu item</a>
+                    <a>menu item</a>
                 </div>
-                <div class="form-group">
-                    <label class="required">Телефон родителя</label>
-                    <input class="form__input" v-mask="'+## (###) ###-##-##'" placeholder="+__ (___) ___ __ __" v-model="phone">
-                </div>
-                    <b-form-group label="Родственная связь">
-                        <b-form-radio-group
-                            v-model="selected"
-                            :options="options"
-                            name="radio-inline"
-                        ></b-form-radio-group>
-                    </b-form-group>
-                    <div class="form-group">
-                        <label class="required">Филиал</label>
-                        <input class="form__input" v-model="branch">
-                    </div>
-                <div class="form-group">
-                    <label class="required">Дата</label>
-                    <input class="form__input" type="date" min="2019-01-01" max="2030-01-01" v-model="date">
-                </div>
-                <div class="form-group">
-                    <label class="required">Время</label>
-                    <input class="form__input" type="time" min="00:01" max="23:59" v-model="time">
-                </div>
-                <div class="form-group">
-                    <label>Заметка</label>
-                    <textarea v-model="notes" class="form-control mb-3" rows="1"></textarea>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Добавить</button>
-                </div>
-                </form>
             </div>
-        </div>
+            <div class="row">
+                <div class="inputs">
+                    <form @submit.prevent="send">
+                        <div class="form-group col-md-12">
+                            <input type="text" class="form-control" placeholder="Имя ребенка" v-model="child_name">
+                        </div>
+                        <div>
+                            <div class="form-group col-md-7">
+                                <input type="datetime" class="form-control col" id="inputEmail4"
+                                       placeholder="17.04.21 17.00">
+                            </div>
+
+
+                            <div class="form-group col-md-4">
+
+                                <b-form-select v-model="selected"
+                                               :options="options"
+                                               class="city-select"
+                                ></b-form-select>
+
+                            </div>
+                            <div class="col-md-4">
+
+                                <b-form-group label="Выберите близкого">
+                                    <b-form-radio-group
+                                        v-model="selected_2"
+                                        :options="options_2"
+                                        name="radio-inline"
+                                    ></b-form-radio-group>
+                                </b-form-group>
+
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="text" class="form-control" placeholder="Имя родителя"
+                                   v-model="parent_name">
+                        </div>
+
+
+                        <input type="tel" placeholder="+38 (___) ___-__-__" v-model="parent_phone"
+                               v-mask="'+38 (###) ###-##-##'">
+
+
+                        <select class="form-select city-select" aria-label="Default select example">
+                            <option selected value="1">Сихив</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <button type="submit" class="button send-button btn">Отправить</button>
+                    </form>
+                </div>
+
+
+                <div class="conversation-block">
+                    <div class="message-block">
+                        <div class="receiver-block">
+                            <img class="person-avatar" src='/images/images_for_promouter/avatar.png'>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                        </div>
+                        <div class="sender-block">
+                            <img class="person-avatar" src='/images/images_for_promouter/avatar.png'>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                        </div>
+                        <div class="receiver-block">
+                            <img class="person-avatar" src='/images/images_for_promouter/avatar.png'>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                        </div>
+                        <div class="sender-block">
+                            <img class="person-avatar" src='/images/images_for_promouter/avatar.png'>
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                        </div>
+                    </div>
+                    <button>Написать сообщение...</button>
+                </div>
+            </div>
+        </main>
     </div>
 </template>
 
 <script>
 
-    import VueToast from 'vue-toast-notification';
-    import 'vue-toast-notification/dist/theme-sugar.css';
-    Vue.use(VueToast);
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
-    import Vuelidate from 'vuelidate'
-    Vue.use(Vuelidate)
-    import { required, minLength, between } from 'vuelidate/lib/validators'
-    import Vue from "vue";
+Vue.use(VueToast);
 
-    export default {
-        data() {
-            return {
-                selected: 'mother_lpr',
-                options: [
-                    { text: 'Мать', value: 'mother_lpr' },
-                    { text: 'Отец', value: 'father_lpr' },
-                    { text: 'Другой родственник', value: 'other_relative_lpr' }
-                ],
-                name: '',
-                age: 0,
-                child_name: '',
-                phone: '',
-                branch: '',
-                date: '',
-                time: '',
-                notes: '',
-            }
+import Vuelidate from 'vuelidate'
+
+Vue.use(Vuelidate)
+import {required, minLength, between} from 'vuelidate/lib/validators'
+import Vue from "vue";
+
+export default {
+    data() {
+        return {
+            selected: '',
+            selected_2: 'м',
+            options: [
+                {value: '', text: 'Возраст ребенка'},
+                {text: '3', value: '3'},
+                {text: '4', value: '4'},
+                {text: '5', value: '5'},
+                {text: '6', value: '6'},
+                {text: '7', value: '7'},
+                {text: '8', value: '8'},
+            ],
+
+            options_2: [
+                {text: 'Мать', value: 'м'},
+                {text: 'Отец', value: 'о'},
+                {text: 'Родственник', value: 'р'},
+            ],
+
+            child_name: '',
+            parent_name: '',
+            parent_phone: '',
+            branch: '',
+            date: '',
+            age: '',
+            notes: '',
+
+        }
+    },
+
+    validations: {
+        name: {
+            required,
+            minLength: minLength(4)
+        },
+        age: {
+            between: between(20, 30)
+        }
+    },
+
+    mounted() {
+    },
+
+    methods: {
+
+        setName(value) {
+            this.name = value
+            this.$v.name.$touch()
+        },
+        setAge(value) {
+            this.age = value
+            this.$v.age.$touch()
         },
 
-        validations: {
-            name: {
-                required,
-                minLength: minLength(4)
-            },
-            age: {
-                between: between(20, 30)
-            }
-        },
+        send() {
+            Vue.$toast.open({
+                message: 'Днные о ребенке успешно добавлены',
+                type: 'success',
+                duration: 5000,
+                position: 'top-right'
+            });
 
-        mounted() {
+            if (this.selected_2 == "м") {
 
-        },
-
-        methods: {
-
-            setName(value) {
-                this.name = value
-                this.$v.name.$touch()
-            },
-            setAge(value) {
-                this.age = value
-                this.$v.age.$touch()
-            },
-
-            send(){
-                Vue.$toast.open({message: 'Нет занятий на этот день',type: 'info',duration: 5000,position: 'top-right'});
-                axios.post( '/api/v2/addClientFromPromoter/', {
+                axios.post('/api/v2/addClientFromPromoter/', {
                     child_name: this.child_name,
-                    phone: this.phone,
-                    date: this.date,
-                    time: this.time,
-                    branch: this.branch,
-                    notes: this.notes,
-                    lpr: this.selected,
-                })
+                    mother_phone: this.parent_phone,
+                    mother_name: this.parent_name,
+                    age: this.selected
+
+
+                }).finally(() => (this.reset()))
+            } else if (this.selected_2 == "о") {
+
+                axios.post('/api/v2/addClientFromPromoter/', {
+                    child_name: this.child_name,
+                    father_phone: this.parent_phone,
+                    father_name: this.parent_name,
+                    age: this.selected
+
+
+                }).finally(() => (this.reset()))
+            } else {
+
+                axios.post('/api/v2/addClientFromPromoter/', {
+                    child_name: this.child_name,
+                    other_relative_phone: this.parent_phone,
+                    other_relative_name: this.parent_name,
+                    age: this.selected
+
+
+                }).finally(() => (this.reset()))
             }
+
         },
-    }
+
+        reset() {
+            this.mother_phone = '',
+                this.child_name = '',
+                this.mother_name = '',
+                this.selected = ''
+
+
+        },
+    },
+}
 </script>
 
 
 <style scoped>
 
-    .form {
-        position: relative; }
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
 
-    .form__input,
-    .form__textarea {
-        position: relative;
-        margin-bottom: 2rem; }
+.main-logo {
+    width: 500px;
+    margin: 45px auto;
+}
 
-    .form__input,
-    .form__textarea {
-        font-family: "Lato", sans-serif;
-        font-size: 0.875rem;
-        font-weight: 300;
-        color: #374853;
-        line-height: 2.375rem;
-        min-height: 2.375rem;
-        position: relative;
-        border: 1px solid #E8E8E8;
-        border-radius: 5px;
-        background: #fff;
-        padding: 0 0.8125rem;
-        width: 100%;
-        transition: border .1s ease;
-        box-sizing: border-box; }
-    .form__input:hover,
-    .form__textarea:hover {
-        border-color: #cfcfcf; }
-    .form__input:focus,
-    .form__textarea:focus {
-        border-color: #a8a8a8;
-        outline: none; }
-    .form__input--with-left-icon,
-    .form__textarea--with-left-icon {
-        padding-left: 2.8125rem; }
-    .form__input--with-right-icon,
-    .form__textarea--with-right-icon {
-        padding-right: 2.8125rem; }
+.inputs {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 100%;
+}
 
-    .form__icon {
-        position: absolute;
-        pointer-events: none;
-        top: -1px;
-        height: 2.5rem;
-        line-height: 2.5rem; }
-    .form__icon--right {
-        right: 0.9375rem; }
-    .form__icon--left {
-        left: 0.8125rem; }
+.inputs input {
+    height: 95px;
+    text-align: center;
+    margin-bottom: 45px;
+    border: 2px solid #044510;
+    font-size: 28px;
+    letter-spacing: 4px;
+    border-radius: 5px;
+}
 
-    .form__textarea {
-        max-width: 100%;
-        min-height: 5.125rem;
-        resize: none;
-        line-height: 1.4;
-        padding-top: 10px; }
+.button {
+    height: 95px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: none;
+    background: #044510;
+    color: #f7f8f9;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: normal;
+}
 
-    .form__label, .form__label--inline {
-        font-size: 0.8125rem;
-        color: #4b6372;
-        margin-bottom: 0.3125rem;
-        margin-left: 0.875rem;
-        display: block;
-        font-family: "Lato", sans-serif; }
+.login-button {
+    width: calc(100% - 30px);
+    margin: 0 auto 20px;
+}
 
-    .form__label--inline {
-        display: inline-block;
-        margin-right: 1.25rem;
-        margin-left: 0.5rem; }
+.forgot-password-button {
+    border: none;
+    background: inherit;
+    color: #044510;
+    text-decoration: underline;
+    letter-spacing: 2px;
+    font-size: 28px;
+}
 
-    .form-group {
-        margin-bottom: 2rem; }
-    .form-group .form__input,
-    .form-group .form__textarea {
-        margin-bottom: 0; }
+header {
+    margin: 45px;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+}
 
-    .form-group--merged {
-        font-size: 0;
-        display: table;
-        width: 100%;
-        border-collapse: separate; }
-    .form-group--merged .form__label, .form-group--merged .form__label--inline {
-        display: table-caption; }
+header .menu-icon img {
+    width: 78px;
+}
 
-    .form-group__input,
-    .form-group__addon,
-    .form-group__button {
-        display: table-cell;
-        vertical-align: middle;
-        margin: 0;
-        white-space: nowrap; }
+.menu {
+    position: absolute;
+    background: #fff;
+    height: 100%;
+    top: 0;
+    width: 100%;
+    left: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    z-index: 9;
+}
 
-    .form-group__addon:first-child,
-    .form-group__input:first-child,
-    .form-group__button:first-child .button {
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-        margin-right: -1px; }
+.menu.open {
+    display: flex;
+}
 
-    .form-group__addon:last-child,
-    .form-group__input:last-child,
-    .form-group__button:last-child .button {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        margin-left: -1px; }
+.menu a {
+    font-size: 48px;
+    margin-bottom: 45px;
+    color: #044510;
+}
 
-    .form-group__input:not(:first-child):not(:last-child),
-    .form-group__addon:not(:first-child):not(:last-child),
-    .form-group__button:not(:first-child):not(:last-child) .button {
-        border-radius: 0; }
+.menu .icons {
+    display: flex;
+    flex-direction: column;
+}
 
-    .form-group__button:not(:first-child):not(:last-child) .button {
-        margin-left: -1px;
-        margin-right: -1px; }
+.cross-icon {
+    position: absolute;
+    top: 45px;
+    right: 45px;
+    transform: rotate(45deg);
+    width: 78px;
+}
 
-    .form-group__addon:first-child {
-        border-right: none; }
+.inputs div {
+    display: flex;
+    justify-content: space-between;
+}
 
-    .form-group__addon:last-child {
-        border-left: none; }
+.inputs div:not(.form-group) input:first-child {
+    width: 75%;
+}
 
-    .form-group__addon {
-        background: #F3F3F3;
-        border: 1px solid #E8E8E8;
-        border-radius: 5px;
-        height: 2.375rem;
-        line-height: 2.375rem;
-        width: 1%;
-        padding: 0 13px;
-        font-size: 14px;
-        text-align: center; }
+.inputs div:not(.form-group) input:last-child {
+    width: 20%;
+}
 
-    .form-group__button {
-        width: 1%; }
-    .form-group__button .button {
-        margin: 0;
-        padding-right: 1.25rem;
-        padding-left: 1.25rem; }
+.city-select {
+    border: 2px solid #044510;
+    margin-bottom: 45px;
+    height: 95px;
+    font-size: 28px;
+    letter-spacing: 4px;
+}
 
-    .form-group__message, .error {
-        font-size: 0.75rem;
-        line-height: 1;
-        display: none;
-        margin-left: 14px;
-        margin-top: -1.6875rem;
-        margin-bottom: 0.9375rem; }
+.city-select option {
+    font-size: 12px;
+}
 
-    .form-group--alert,
-    .form-group--error {
-        animation-name: shakeError;
-        animation-fill-mode: forwards;
-        animation-duration: .6s;
-        animation-timing-function: ease-in-out; }
+.conversation-block {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #044510;
+    padding: 0;
+    border-radius: 10px;
+    width: calc(100% - (calc(var(--bs-gutter-x) / 2) + (var(--bs-gutter-x) / 2)));
+    margin: 45px auto;
+}
 
-    .form-group--loading .form__input {
-        border-image-slice: 1;
-        animation: loading-frame 1s infinite; }
+.conversation-block button {
+    background: none;
+    height: 80px;
+    font-size: 44px;
+    color: #8a8b90;
+    border: none;
+    border-top: 1px solid #044510;
+    position: relative;
+}
 
-    @keyframes loading-frame {
-        0% {
-            border-color: #3acfd5; }
-        50% {
-            border-color: #3a4ed5; }
-        100% {
-            border-color: #3acfd5; } }
+.conversation-block button:before {
+    content: '';
+    background-image: url(/images/images_for_promouter//arrow.png);
+    width: 50px;
+    height: 50px;
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #044510;
+    border-radius: 50%;
+    background-size: 50%;
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translate(0%, -50%);
+}
 
-    .form-group--success .form__label, .form-group--success .form__label--inline {
-        color: #43AC6A; }
+.message-block {
+    padding: 25px;
+    max-height: 21vh;
+    overflow: scroll;
+}
 
-    .form-group--success .form-group__addon {
-        color: white;
-        border-color: #85d0a1;
-        background: #85d0a1; }
+.sender-block {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 45px;
+}
 
-    .form-group--success input,
-    .form-group--success textarea,
-    .form-group--success input:focus,
-    .form-group--success input:hover {
-        border-color: #85d0a1; }
+.receiver-block {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 45px;
+    flex-direction: row-reverse;
+}
 
-    .form-group--success + .form-group__message, .form-group--success + .error {
-        display: block;
-        color: #73c893; }
+.sender-block img {
+    width: 80px;
+    margin-right: 25px;
+}
 
-    .form-group--error .form__label, .form-group--error .form__label--inline {
-        color: #f04124; }
+.receiver-block img {
+    width: 80px;
+    margin-left: 25px;
+}
 
-    .form-group--error .form-group__addon {
-        color: white;
-        border-color: #f79483;
-        background: #f79483; }
+.sender-block p, .receiver-block p {
+    margin: 0;
+    border: 1px solid #044510;
+    font-size: 22px;
+    padding: 15px;
+}
 
-    .form-group--error input,
-    .form-group--error textarea,
-    .form-group--error input:focus,
-    .form-group--error input:hover {
-        border-color: #f79483; }
+.send-button {
+    margin-bottom: 0;
+}
 
-    .form-group--error + .form-group__message, .form-group--error + .error {
-        display: block;
-        color: #f57f6c; }
+.map-image {
+    width: 100%;
+}
 
-    .form-group--alert .form__label, .form-group--alert .form__label--inline {
-        color: #f08a24; }
+.shedule-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 45px;
+}
 
-    .form-group--alert .form-group__addon {
-        color: white;
-        border-color: #f7bd83;
-        background: #f7bd83; }
+.shedule-header img {
+    width: 60px;
+    margin-right: 25px;
+}
 
-    .form-group--alert input,
-    .form-group--alert textarea,
-    .form-group--alert input:focus,
-    .form-group--alert input:hover {
-        border-color: #f7bd83; }
+.shedule-header p {
+    margin: 0;
+    font-size: 60px;
+    text-decoration: underline;
+    letter-spacing: 5px;
+}
 
-    .form-group--alert + .form-group__message {
-        display: block;
-        color: #f5b06c; }
+.shedule-block {
+    padding: 0 25px;
+}
 
-    @keyframes shakeError {
-        0% {
-            transform: translateX(0); }
-        15% {
-            transform: translateX(0.375rem); }
-        30% {
-            transform: translateX(-0.375rem); }
-        45% {
-            transform: translateX(0.375rem); }
-        60% {
-            transform: translateX(-0.375rem); }
-        75% {
-            transform: translateX(0.375rem); }
-        90% {
-            transform: translateX(-0.375rem); }
-        100% {
-            transform: translateX(0); } }
+.shedule-block p {
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+
+@media (min-width: 992px) {
+    html, body {
+        overflow: visible;
+        max-width: 540px;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 576px) {
+    .modal-dialog-centered {
+        max-width: 90%;
+    }
+}
 
 
-    </style>
+</style>
