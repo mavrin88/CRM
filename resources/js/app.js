@@ -125,8 +125,6 @@ Vue.component('permissions-component', require('./components/PermissionsComponen
 Vue.component('upload-component', require('./components/UploadFile.vue').default);
 Vue.component('promoter-component', require('./components/PromoterComponent.vue').default);
 Vue.component('agregator-component', require('./components/AgregatorComponent.vue').default);
-Vue.component('kassa-component', require('./components/KassaComponent.vue').default);
-Vue.component('kassa-setings-component', require('./components/KassaSetingsComponent.vue').default);
 
 
 Vue.component('menu-component', require('./components/Menu/MenuComponent.vue').default);
@@ -143,6 +141,15 @@ Vue.component('edit-warehouse-component', require('./components/Warehouse/EditWa
 Vue.component('add-article-component', require('./components/Warehouse/AddArticleComponent.vue').default);
 Vue.component('show-article-component', require('./components/Warehouse/ShowArticleComponent.vue').default);
 Vue.component('show-log-component', require('./components/Warehouse/ShowLogComponent.vue').default);
+
+//---------------------------- Kassa_Settings ----------------------------------//
+
+Vue.component('kassa-component', require('./components/KassaComponent.vue').default);
+Vue.component('kassa-setings-component', require('./components/KassaSetingsComponent.vue').default);
+
+Vue.component('edit-operations-in-kassa_settings', require('./components/Kassa_Settings/EditOperationKassaSettings.vue').default);
+
+Vue.component('edit-groups-in-kassa_settings', require('./components/Kassa_Settings/EditGroupsKassaSettings.vue').default);
 
 
 /**

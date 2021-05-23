@@ -87,21 +87,56 @@ class KassaGroupController extends Controller
         //
     }
 
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function destroy($id)
+
     {
-        //
+        $post = KassaGroup::find($id);
+
+        $post->delete();
+
+       return "Группа удалена";
+    }
+
+
+
+    public function editNameInKassaSettings(Request $request)
+    {
+
+        $field_name = $request['field_name'];
+        $KassaGroup = KassaGroup::find($request['field_id']);
+        $KassaGroup->$field_name = $request['field_value'];
+        $KassaGroup->save();
+
+            return "Имя Группы обновлено";
+
+
+    }
+
+    public function editKassaInKassaSettings(Request $request)
+    {
+
+
+        $field_name = $request['field_name'];
+        $KassaGroup = KassaGroup::find($request['field_id']);
+        $KassaGroup->$field_name = $request['field_value'];
+        $KassaGroup->save();
+
+        return "Данные обновлены";
+
     }
 
     public function getGroupInKassa(Request $request){
 
-       $group_in_kassa = KassaGroup::where('branch_id', $request->branch_id)->get();
+        $group_in_kassa = KassaGroup::where('branch_id', $request->branch_id)->get();
 
-       return GroupInKassaResource::collection($group_in_kassa);
+        return GroupInKassaResource::collection($group_in_kassa);
     }
+
 }

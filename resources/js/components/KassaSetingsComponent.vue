@@ -1,15 +1,30 @@
 <template>
     <div>
 
+                                        <!-- Виды операций -->
+        <edit-operations-in-kassa_settings :can="can" @get-method="updateDataWhenExitModalEditOptions" ref="getmodaleditoperations" v-if="can.kassa_add_operation_type"></edit-operations-in-kassa_settings>
+
+                                    <!-- Группы -->
+        <edit-groups-in-kassa_settings :can="can" @get-method="updateDataWhenExitModalEditGroups" ref="getmodaleditgroups" v-if="can.kassa_add_operation_type"></edit-groups-in-kassa_settings>
+
+
+
         <b-modal id="coming" title="Новая операция" @ok="handleSubmit" @hidden="resetModal" centered ok-only ok-title="Добавить">
             <div class="card-body py-0">
                 <form ref="formSettingsGroup" @submit.stop.prevent="handleSubmit">
 
                     <div class="radio-group-toggle mb-5 text-center">
-                        <input class="mx-3" type="checkbox" id="coming" value="1" v-model="checkbox.coming">Приход
-                        <input class="mx-3" type="checkbox" id="out" value="1" v-model="checkbox.out">Расход
-                        <input class="mx-3" type="checkbox" id="cash" value="1" v-model="checkbox.cash">Наличные
-                        <input class="mx-3" type="checkbox" id="beznal" value="1" v-model="checkbox.beznal">Экваринг
+                        <input class="mx-3" type="checkbox" id="comin" value="1" v-model="checkbox.coming">
+                        <label for="comin">Приход</label>
+                        <input class="mx-3" type="checkbox" id="out" value="1" v-model="checkbox.out">
+                        <label for="out">Расход</label>
+                        <input class="mx-3" type="checkbox" id="cash" value="1" v-model="checkbox.cash">
+                        <label for="cash">Наличные</label>
+                        <br>
+                        <input class="mx-3" type="checkbox" id="beznal" value="1" v-model="checkbox.beznal">
+                        <label for="beznal">Экваринг</label>
+                        <br>
+
                     </div>
 
                     <div class="form-group row">
@@ -47,6 +62,8 @@
                 </form>
             </div>
         </b-modal>
+
+
 
         <b-modal id="group" title="Новая группа" @ok="saveGroup" @hidden="resetModalGroup" centered ok-only ok-title="Добавить">
             <div class="card-body py-0">
@@ -100,11 +117,14 @@
                     <!-- Список клиентов -->
                     <div class="card-body pb-0">
                         <b-table
+
                             hover
                             sticky-header="700px"
                             :items="operation_types"
                             :fields="fields"
-                            head-variant="light">
+                            head-variant="light"
+                            @row-clicked= "rowSelectedEditOperations">
+
                             <template v-slot:cell(coming)="row">
                                 <span v-if="row.item.coming" class="text-success">●</span>
                             </template>
@@ -117,6 +137,8 @@
                             <template v-slot:cell(beznal)="row">
                                 <span v-if="row.item.beznal" class="text-success">●</span>
                             </template>
+
+
                         </b-table>
                     </div>
                 </b-tab>
@@ -137,11 +159,14 @@
                     </div>
                     <div class="card-body pb-0">
                         <b-table
+
                             hover
                             sticky-header="700px"
                             :items="groups"
                             :fields="groupsFields"
-                            head-variant="light">
+                            head-variant="light"
+                            @row-clicked= "rowSelectedEditGroups">
+
                         </b-table>
                     </div>
                 </b-tab>
@@ -171,11 +196,12 @@
                 kassaGroups: [],
                 operation_types: [],
                 checkbox: {
-                    coming: '',
+                    comin: '',
                     out: '',
                     cash: '',
                     beznal: '',
                 },
+
                 fields: [
                     {
                         key: 'name',
@@ -208,7 +234,7 @@
                     {
                         key: 'group',
                         label: 'Группа',
-                    },
+                    }
                 ],
                 groupsFields: [
                     {
@@ -220,6 +246,7 @@
                         label: 'Касса',
                     }
                 ],
+
             }
         },
 
@@ -228,14 +255,6 @@
         },
 
         methods: {
-
-            resetModal(){
-                this.name = ''
-                this.checkbox = ''
-                this.branch = ''
-                this.group_name = ''
-                this.coment = ''
-            },
 
             resetModalGroup(){
                 this.group_name = ''
@@ -300,7 +319,46 @@
             getAllGroups(){
                 axios.get('api/v2/kassaGroups')
                     .then(response => this.groups = response.data.data)
-            }
+            },
+
+
+            //----------------------- Show Edit Groups Modal ----------------------------//
+
+
+            rowSelectedEditGroups(row) {
+
+                    this.$refs.getmodaleditgroups.showModalEditGroupsKassaSettings(row)
+            },
+
+
+            //----------------------- Show Edit Operations Modal ----------------------------//
+
+            rowSelectedEditOperations(row) {
+
+                    this.$refs.getmodaleditoperations.showModalEditOperationKassaSettings(row)
+            },
+
+            //------------------------- Update and reset Data ----------------------------//
+
+            updateDataWhenExitModalEditGroups(){
+
+                this.getAllGroups()
+            },
+
+            updateDataWhenExitModalEditOptions(){
+
+                this.getOperationTypes()
+            },
+
+            resetModal(){
+                this.name = ''
+                this.checkbox = ''
+                this.branch = ''
+                this.group_name = ''
+                // this.coment = ''
+
+            },
+
 
         }
     }
