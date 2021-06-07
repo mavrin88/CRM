@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+    66666666
     /**
      * Display a listing of the resource.
      *
